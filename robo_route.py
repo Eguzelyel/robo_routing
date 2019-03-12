@@ -4,7 +4,6 @@ This file predetermines the route a robot should take in order
 to fill as many potholes as possible.
 """
 
-
 import pandas as pd
 from sodapy import Socrata
 import networkx as nx
@@ -25,41 +24,38 @@ def download_potholes():
 	df = df[["latitude", "longitude"]]
 	return df
 
-#Find unique shortest path between one pothole and all other potholes
-def short_path1(Chicago, Cpp, src, potholes):
+#Find unique shortest path between one pothole and the one its closest to
+def short_path1(Chicago, Cpp, src, dst, potholes):
 
-  min_route = None
-  min_route_cost = None
-  
-  #Find the node closest to the central pothole
-  src_node = ox.get_nearest_node(Chicago, src)
-  
-  for index, row in potholes.iterrows():
-    #Find the node closest to the other pothole
-    dst = (float(row["latitude"]), float(row["longitude"]))
-    dst_node = ox.get_nearest_node(Chicago, dst)
+	#Find the node closest to the central pothole
+	src_node = ox.get_nearest_node(Chicago, src)
 
-    #Compute the shortest path between the two
-    try:
-      route = nx.shortest_path(Chicago, src_node, dst_node)
-    except:
-      continue
+	#Find the node closest to the other pothole
+	dst_node = ox.get_nearest_node(Chicago, dst)
 
-    #If the route costs less to traverse, make it the shortest path
-    #This is INCOMPLETE!
-    if(min_route is None and route is not None):
-      min_route = route
-      break
+	#Compute the shortest path between the two
+	try:
+		route = nx.shortest_path(Chicago, src_node, dst_node)
+	except:
+		print("Could not find path between the source and destination")
+		raise
 
-  #Add the path to the edge list
-  Cpp.add_route(min_route)
+	#Add the path to the edge list
+	Cpp.add_route(route)
 	
 
 #Find the list of edges to use in the robot's route
 def short_pathN(Chicago, Cpp, potholes):
-  for index, row in potholes.iterrows():
-    loc = (float(row["latitude"]), float(row["longitude"]))
-    short_path1(Chicago, Cpp, loc, potholes)
+
+	#Get list of all coordinates
+
+	#Compute the distance between one pothole and all other potholes
+	
+
+	#Find the shortest path
+	for index, row in potholes.iterrows():
+		dst = (float(row["latitude"]), float(row["longitude"]))
+		short_path1(Chicago, Cpp, src, dst, potholes)
 
 #Run the CPP over the edge list
 def get_robo_route():
