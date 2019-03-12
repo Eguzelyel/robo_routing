@@ -19,11 +19,9 @@ def chicago_graph():
 def download_potholes():
 	link = "https://data.cityofchicago.org/resource/_311-potholes.csv?$select=latitude,longitude,status"
 	df = pd.read_csv(link)
-	print(df.head())
 	df = df[(df.status == "Open") | (df.status == "Open - Dup")]
 	df = df[["latitude", "longitude"]]
 	df = df.dropna(axis =0, subset=["longitude", "latitude"])
-	print(df.head())
 	return df
 
 #Find shortest path between one pothole and the one its closest to
