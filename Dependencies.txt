@@ -1,0 +1,45 @@
+These are instructions on how to install the dependencies necessary for this application.
+- Geopandas
+- NetworkX
+- osmnx
+- sodapy
+- pandas
+- itertools
+- warnings
+- logging
+
+-----------------------------------------------------------------------
+Step 1:
+
+Download .whl files for GDAL, Fiona, pyproj, Shapely and Rtree from the following:
+
+	https://www.lfd.uci.edu/~gohlke/pythonlibs/
+
+-----------------------------------------------------------------------
+	
+Step 2:
+
+Install the .whl files using the following structure
+
+	pip install filename.whl
+
+Replace filename with the location of the file being installed.
+-----------------------------------------------------------------------
+
+Step 3:
+
+pip install https://github.com/geopandas/geopandas/archive/master.zip
+
+-----------------------------------------------------------------------
+
+Step 4:
+
+pip install osmnx
+pip install networkx
+pip install sodapy
+pip install pandas
+pip install itertools
+pip install warnings
+pip install logging
+
+-----------------------------------------------------------------------
