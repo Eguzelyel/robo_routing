@@ -75,7 +75,7 @@ def get_shortest_paths_distances(graph, pairs, edge_weight_name='distance'):
     distances = {}
     for pair in pairs:
         distances[pair] = nx.dijkstra_path_length(graph, pair[0], pair[1], weight=edge_weight_name)
-        if i%5 == 0:
+        if i%100 == 0:
           print(i/len(pairs))
         i+=1
     return distances
@@ -111,7 +111,7 @@ def dedupe_matching(matching):
     """
 
     print(matching)
-    matched_pairs_w_dupes = [tuple(sorted([k, v])) for k, v in matching.items()]
+    matched_pairs_w_dupes = [tuple(sorted([k, v])) for k, v in matching]
     return list(set(matched_pairs_w_dupes))
 
 
@@ -229,7 +229,7 @@ class CppGraph:
         """
         
         self.G = G
-        self.g = nx.MultiGraph()
+        self.g = nx.MultiDiGraph()
         self.start_node = None
         self.edge_count = 0
     
@@ -237,6 +237,7 @@ class CppGraph:
     
         """
         Set the start/end point for the CPP.
+		Note, this node must be in the graph.
         
         Args: Latitude and longitude
         Return: Nothing
@@ -259,18 +260,22 @@ class CppGraph:
       
         nodep = None
         for node in route:
+		
+          print(str(nodep) + " " + str(node))
+		
           edge_attr_dict={
               "id" : self.edge_count, 
-              "weight" : 1    #This is a very temporary hack
+              "weight" : 1,    #This is a very temporary hack
+			  "distance": 1   #This is also a temporary hack
           } 
 
-          if nodep:
-            self.g.add_node(node, attr_dict=self.G.nodes[node])
+          if nodep is not None:
             self.g.add_node(nodep, attr_dict=self.G.nodes[nodep])
+            self.g.add_node(node, attr_dict=self.G.nodes[node])
             self.g.add_edge(nodep, node, **edge_attr_dict)
+            self.edge_count+=1
 
           nodep = node
-          self.edge_count+=1
         
     def solve(self, edge_weight='distance', verbose=False):
     
@@ -278,7 +283,7 @@ class CppGraph:
         Solve the Chinese Postman Problem on this graph.
         
         Args: edge weight type, whether or not to print progress
-        Return: A route consisting of node indexes
+        Return: A route (list) consisting of sequential node indexes
         """
     
         logger_cpp = logging.getLogger('{0}.{1}'.format(__name__, 'cpp'))
