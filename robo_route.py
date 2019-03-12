@@ -63,13 +63,21 @@ def short_pathN(Chicago, Cpp, potholes):
 
 #Run the CPP over the edge list
 def get_robo_route():
-	
+
+	print("Downloading Chicago")
 	Chicago = chicago_graph()
 	Cpp = CppGraph(Chicago)
+	
+	print("Downloading Potholes")
 	potholes = download_potholes()
+	
+	print("Adding potholes to Chicago")
 	short_pathN(Chicago, Cpp, potholes)
 	
+	print("Finding the route")
 	route = Cpp.solve()
+	
 	fig, ax = ox.plot_graph_route(G, route, save=True, filename="graph")
 	return route
-	
+
+get_robo_route()
