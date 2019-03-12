@@ -17,9 +17,13 @@ def chicago_graph():
 
 #Download pothole coordinates of only open potholes and map to OSM nodes
 def download_potholes():
+	'''
 	client = Socrata("data.cityofchicago.org", None)
 	results = client.get("787j-mys9")
 	df = pd.DataFrame.from_records(results)
+	'''
+	link = "https://data.cityofchicago.org/api/views/7as2-ds3y/rows.csv?accessType=DOWNLOAD"
+	df = pd.read_csv(link)
 	df = df[(df.status == "Open") | (df.status == "Open - Dup")]
 	df = df[["latitude", "longitude"]]
 	return df
