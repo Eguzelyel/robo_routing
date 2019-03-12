@@ -15,6 +15,7 @@ Download .whl files for GDAL, Fiona, pyproj, Shapely and Rtree from the followin
 
 	https://www.lfd.uci.edu/~gohlke/pythonlibs/
 
+NOTE: use the older version of pyproj.
 -----------------------------------------------------------------------
 	
 Step 2:

@@ -17,14 +17,16 @@ def chicago_graph():
 
 #Download pothole coordinates of only open potholes and map to OSM nodes
 def download_potholes():
-	client = Socrata("data.cityofchicago.org", None)
-	results = client.get("787j-mys9")
-	df = pd.DataFrame.from_records(results)
+	link = "https://data.cityofchicago.org/resource/_311-potholes.csv?$select=latitude,longitude,status"
+	df = pd.read_csv(link)
+	print(df.head())
 	df = df[(df.status == "Open") | (df.status == "Open - Dup")]
 	df = df[["latitude", "longitude"]]
+	df = df.dropna(axis =0, subset=["longitude", "latitude"])
+	print(df.head())
 	return df
 
-#Find unique shortest path between one pothole and the one its closest to
+#Find shortest path between one pothole and the one its closest to
 def short_path1(Chicago, Cpp, src, dst, potholes):
 
 	#Find the node closest to the central pothole
@@ -44,12 +46,17 @@ def short_path1(Chicago, Cpp, src, dst, potholes):
 	Cpp.add_route(route)
 	
 
+
 #Find the list of edges to use in the robot's route
 def short_pathN(Chicago, Cpp, potholes):
 
-	#Get list of all coordinates
+	#Get list of the (x, y)
+	coords = []
+	coords.append(Cpp.start)
+	for i in potholes:
+		coords.append()
 
-	#Compute the distance between one pothole and all other potholes
+	#Compute the (euclidean) distance between one pothole and all other potholes
 	
 
 	#Find the shortest path
@@ -58,11 +65,12 @@ def short_pathN(Chicago, Cpp, potholes):
 		short_path1(Chicago, Cpp, src, dst, potholes)
 
 #Run the CPP over the edge list
-def get_robo_route():
+def get_robo_route(start=()):
 
 	print("Downloading Chicago")
-	Chicago = chicago_graph()
-	Cpp = CppGraph(Chicago)
+	#Chicago = chicago_graph()
+	#Cpp = CppGraph(Chicago)
+	#Cpp.set_start(start)
 	
 	print("Downloading Potholes")
 	potholes = download_potholes()
