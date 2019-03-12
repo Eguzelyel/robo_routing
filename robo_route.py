@@ -4,7 +4,6 @@ This file predetermines the route a robot should take in order
 to fill as many potholes as possible.
 """
 
-
 import pandas as pd
 from sodapy import Socrata
 import networkx as nx

@@ -260,9 +260,6 @@ class CppGraph:
       
         nodep = None
         for node in route:
-		
-          print(str(nodep) + " " + str(node))
-		
           edge_attr_dict={
               "id" : self.edge_count, 
               "weight" : 1,    #This is a very temporary hack
