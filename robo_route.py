@@ -142,7 +142,6 @@ def short_path1(Chicago, Cpp, src, dst, potholes):
 		dst: The pothole closest to the source pothole
 	"""
 
-
 	#Find the node closest to the central pothole
 	src_node = ox.get_nearest_node(Chicago, src)
 
@@ -222,9 +221,9 @@ def get_robo_route(start=(41.814884, -87.664603), chicago_path="chicago.xml", po
 	fig, ax = ox.plot_graph_route(G, route, save=True, filename="graph")
 	return route
 
-#update_chicago_graph("D:/Documents/School/S19/MATH 497/robo_routing/chicago.xml")
-#update_potholes("D:/Documents/School/S19/MATH 497/robo_routing/potholes.csv")
-#open_potholes("D:/Documents/School/S19/MATH 497/robo_routing/potholes.csv")
-#get_robo_route(chicago_path="D:/Documents/School/S19/MATH 497/robo_routing/chicago.xml", pothole_path="D:/Documents/School/S19/MATH 497/robo_routing/potholes.csv")
-open_chicago_graph("C:/Users/lukem/Documents/School/S19/MATH 497/robo_routing/chicago.xml")
+def main():]
+	#CHICAGO_GRAPH = "C:/Users/lukem/Documents/School/S19/MATH 497/robo_routing/chicago.xml"
+	#POTHOLES = "C:/Users/lukem/Documents/School/S19/MATH 497/robo_routing/potholes.csv"
+	get_robo_route()
 
+main()
